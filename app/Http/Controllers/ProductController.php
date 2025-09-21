@@ -26,11 +26,27 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
+    {
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('products', 'public'); // storage/app/public/products
+            $data['image'] = $path;
+        }
+
+        // slug auto-created by model boot, or set manually:
+        // $data['slug'] = Str::slug($data['name']);
+
+        Product::create($data);
+
+        return redirect()->route('products.index')->with('success', 'Product created.');
+    }
+
+    public function store_old(Request $request)
     {
         //
     }
-
     /**
      * Display the specified resource.
      */
