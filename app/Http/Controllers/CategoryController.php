@@ -45,12 +45,8 @@ class CategoryController extends Controller
                         ->with('success', 'Category created successfully!');
     }
     /**
-     * Display the specified resource.
+    
      */
-    public function show(Category $category)
-    {
-        return view('categories.show', compact('category'));
-    }
 
     /**
      * Show the form for editing the specified resource.
