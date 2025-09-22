@@ -13,7 +13,7 @@ class Category extends Model
         return $this->hasMany(Subcategory::class);
     }
 
-    // slug auto-generate (optional)
+    // slug auto-generate
     protected static function booted()
     {
         static::creating(function ($category) {

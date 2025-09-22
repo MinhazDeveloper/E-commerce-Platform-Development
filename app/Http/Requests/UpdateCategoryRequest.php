@@ -11,7 +11,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // পরে authorization logic দিতে পারো
+        return true;
     }
 
     /**
