@@ -19,7 +19,17 @@ class ProductController extends Controller
         $products = Product::latest()->paginate(10);
         return view('products.index', compact('products'));
     }
-
+    
+    public function groupedProducts(){
+        $subcategories = Subcategory::with('products')->whereHas('products')->get();
+        return view('products.grouped', compact('subcategories'));
+    }
+    // একক Subcategory অনুযায়ী products
+    public function bySubcategory(Subcategory $subcategory)
+    {
+        $subcategory->load('products');
+        return view('products.by_subcategory', compact('subcategory'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -49,10 +59,13 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    // public function show(Product $product)
-    // {
-    //     //
-    // }
+    public function showBySubcategory($slug){
+        $subcategory = Subcategory::where('slug', $slug)
+            ->with('products') // eager load products
+            ->firstOrFail();
+
+        return view('products.by_subcategory', compact('subcategory'));
+    }
 
     /**
      * Show the form for editing the specified resource.
